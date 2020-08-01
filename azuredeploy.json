@@ -266,7 +266,7 @@
             {
                     "type": "Microsoft.DBforMySQL/servers/firewallRules",
                     "apiVersion": "2017-12-01",
-                    "name": "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'), '/AllowAllWindowsAzureIps')]",
+                    "name": "AllowAllWindowsAzureIps",
                     "location": "[parameters('location')]",
                     "dependsOn": [
                         "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'),'/databases/' , variables('databaseName'))]",
