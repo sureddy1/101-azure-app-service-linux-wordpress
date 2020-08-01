@@ -261,9 +261,9 @@
                     "geoRedundantBackup": "Disabled"
                 },
                 "sslEnforcement": "Disabled"
-            },
-            "resources": [
-                {
+            }
+        },
+            {
                     "type": "Microsoft.DBforMySQL/servers/firewallRules",
                     "apiVersion": "2017-12-01",
                     "name": "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'), '/AllowAllWindowsAzureIps')]",
@@ -276,8 +276,8 @@
                         "startIpAddress": "0.0.0.0",
                         "endIpAddress": "0.0.0.0"
                     }
-                },
-                {
+            },
+            {
                     "name": "[variables('databaseName')]",
                     "type": "databases",
                     "apiVersion": "2017-12-01",
@@ -288,8 +288,8 @@
                     "dependsOn": [
                         "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'))]"
                     ]
-                }
-            ]
-        }
+            }
     ]
 }
+    
+
