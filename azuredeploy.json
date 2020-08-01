@@ -264,7 +264,7 @@
             },        
             "resources": [
             {
-                "type": "Microsoft.DBforMySQL/servers/databases",
+                "type": "databases",
                 "name": "[variables('databaseName')]",
                 "apiVersion": "2017-12-01",
                 "properties": {
