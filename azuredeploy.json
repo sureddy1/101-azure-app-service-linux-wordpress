@@ -279,7 +279,7 @@
             },
             {
                     "name": "[variables('databaseName')]",
-                    "type": "databases",
+                    "type": "Microsoft.DBforMySQL/servers/databases",
                     "apiVersion": "2017-12-01",
                     "properties": {
                         "charset": "utf8",
