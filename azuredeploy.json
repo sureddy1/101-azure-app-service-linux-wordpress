@@ -1,5 +1,5 @@
 {
-    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentTemplate.json#",
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
     "contentVersion": "1.0.0.0",
     "parameters": {
         "sku": {
@@ -168,10 +168,10 @@
         {
             "type": "Microsoft.Web/sites/config",
             "apiVersion": "2019-08-01",
-            "name": "[concat([parameters('siteName')], '/web')]",
+            "name": "[concat(parameters('siteName'), '/web')]",
             "location": "[parameters('location')]",
             "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', [parameters('siteName')])]"
+                "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
             ],
             "properties": {
                 "numberOfWorkers": 1,
@@ -205,7 +205,7 @@
                     },
                     {
                         "name": "DATABASE_USERNAME",
-                        "value": "[parameters('administratorLogin'),'@',variables('serverName')]"
+                        "value": "[concat(parameters('administratorLogin'),'@',variables('serverName'))]"
                     },
                     {
                         "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
@@ -266,8 +266,8 @@
                 {
                     "type": "Microsoft.DBforMySQL/servers/firewallRules",
                     "apiVersion": "2017-12-01",
-                    "name": "[concat('Microsoft.DBforMySQL/servers/', parameters('serverName'), '/AllowAllWindowsAzureIps')]",
-                    "location": "[parameters('mysqLocation')]",
+                    "name": "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'), '/AllowAllWindowsAzureIps')]",
+                    "location": "[parameters('location')]",
                     "dependsOn": [
                         "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'),'/databases/' , variables('databaseName'))]",
                         "[concat('Microsoft.DBforMySQL/servers/', variables('serverName'))]"
