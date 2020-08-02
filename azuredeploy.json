@@ -173,7 +173,7 @@
                         },
                         {
                             "name": "DATABASE_HOST",
-                            "value": "reference(resourceId('Microsoft.DBforMySQL/servers',variables('serverName'))).fullyQualifiedDomainName"
+                            "value": "[reference(resourceId('Microsoft.DBforMySQL/servers',variables('serverName'))).fullyQualifiedDomainName]"
                         },
                         {
                             "name": "DATABASE_NAME",
@@ -234,15 +234,16 @@
             },
             "properties": {
                 "version": "[parameters('mysqlVersion')]",
+                "createMode": "Default",
                 "administratorLogin": "[parameters('administratorLogin')]",
                 "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
+                "publicNetworkAccess": "Disabled",
                 "storageProfile": {
                     "storageMB": "[parameters('dbSkuSizeMB')]",
                     "backupRetentionDays": "7",
                     "geoRedundantBackup": "Disabled"
                 },
-                "sslEnforcement": "Disabled",
-                "publicNetworkAccess": "Disabled"
+                "sslEnforcement": "Disabled"
             },        
             "resources": [
             {
