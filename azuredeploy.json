@@ -237,7 +237,7 @@
                 "createMode": "Default",
                 "administratorLogin": "[parameters('administratorLogin')]",
                 "administratorLoginPassword": "[parameters('administratorLoginPassword')]",
-                "publicNetworkAccess": "Disabled",
+                "publicNetworkAccess": "Enabled",
                 "storageProfile": {
                     "storageMB": "[parameters('dbSkuSizeMB')]",
                     "backupRetentionDays": "7",
