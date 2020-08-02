@@ -158,75 +158,68 @@
             ],
             "kind": "app,linux,container",
             "properties": {
-               
                 "name": "[parameters('siteName')]",
-                "clientAffinityEnabled": false,
+                "clientAffinityEnabled": true,
                 "httpsOnly": true,
-                "serverFarmId": "[variables('hostingPlanName')]"
+                "serverFarmId": "[variables('hostingPlanName')]",
+                "reserved": true,
+                "siteConfig":
+                {
+                    "alwaysOn": true,
+                    "appSettings": [
+                        {
+                            "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
+                            "value": "true"
+                        },
+                        {
+                            "name": "DATABASE_HOST",
+                            "value": "reference(resourceId('Microsoft.DBforMySQL/servers',variables('serverName'))).fullyQualifiedDomainName"
+                        },
+                        {
+                            "name": "DATABASE_NAME",
+                            "value": "[variables('databaseName')]"
+                        },
+                        {
+                            "name": "DATABASE_PASSWORD",
+                            "value": "[parameters('administratorLoginPassword')]"
+                        },
+                        {
+                            "name": "DATABASE_USERNAME",
+                            "value": "[concat(parameters('administratorLogin'),'@',variables('serverName'))]"
+                        },
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
+                            "value": "==1aCKnR5Dv6V2p1gLDNe803eChzF96j"
+                        },                    
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_URL",
+                            "value": "https://usidsrsucr.azurecr.io"
+                        },
+                        {
+                            "name": "DOCKER_REGISTRY_SERVER_USERNAME",
+                            "value": "usidsrsucr"
+                        },
+                        {
+                            "name": "WEBSITE_HTTPLOGGING_RETENTION_DAYS",
+                            "value": "7"
+                        }
+                    ],
+                    "connectionStrings": [
+                        {
+                            "name": "defaultConnection",
+                            "ConnectionString": "[concat('Database=', variables('databaseName'), ';Data Source=', reference(resourceId('Microsoft.DBforMySQL/servers',variables('serverName'))).fullyQualifiedDomainName,';User Id=',parameters('administratorLogin'),'@',variables('serverName') ,';Password=',parameters('administratorLoginPassword'))]",
+                            "type": "MySQL"
+                        }
+                    ],
+                    "linuxFxVersion": "DOCKER|usidsrsucr.azurecr.io/wordpress:php7.4-fpm-nginx",
+                    "httpLoggingEnabled": true,
+                    "logsDirectorySizeLimit": 35,
+                    "minTlsVersion": "1.2",
+                    "ftpsState": "AllAllowed"
+
+                }
             }
-        },
-        {
-            "type": "Microsoft.Web/sites/config",
-            "apiVersion": "2019-08-01",
-            "name": "[concat(parameters('siteName'), '/web')]",
-            "location": "[parameters('location')]",
-            "dependsOn": [
-                "[resourceId('Microsoft.Web/sites', parameters('siteName'))]"
-            ],
-            "properties": {
-                "alwaysOn": true,
-                "appSettings": [
-                    {
-                        "name": "WEBSITES_ENABLE_APP_SERVICE_STORAGE",
-                        "value": "true"
-                    },
-                    {
-                        "name": "DATABASE_HOST",
-                        "value": "reference(resourceId('Microsoft.DBforMySQL/servers',variables('serverName'))).fullyQualifiedDomainName"
-                    },
-                    {
-                        "name": "DATABASE_NAME",
-                        "value": "[variables('databaseName')]"
-                    },
-                    {
-                        "name": "DATABASE_PASSWORD",
-                        "value": "[parameters('administratorLoginPassword')]"
-                    },
-                    {
-                        "name": "DATABASE_USERNAME",
-                        "value": "[concat(parameters('administratorLogin'),'@',variables('serverName'))]"
-                    },
-                    {
-                        "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
-                        "value": "==1aCKnR5Dv6V2p1gLDNe803eChzF96j"
-                    },                    
-                    {
-                        "name": "DOCKER_REGISTRY_SERVER_URL",
-                        "value": "https://usidsrsucr.azurecr.io"
-                    },
-                    {
-                        "name": "DOCKER_REGISTRY_SERVER_USERNAME",
-                        "value": "usidsrsucr"
-                    },
-                    {
-                        "name": "WEBSITE_HTTPLOGGING_RETENTION_DAYS",
-                        "value": "7"
-                    }
-                ],
-                "connectionStrings": [
-                    {
-                        "name": "defaultConnection",
-                        "ConnectionString": "[concat('Database=', variables('databaseName'), ';Data Source=', reference(resourceId('Microsoft.DBforMySQL/servers',variables('serverName'))).fullyQualifiedDomainName,';User Id=',parameters('administratorLogin'),'@',variables('serverName') ,';Password=',parameters('administratorLoginPassword'))]",
-                        "type": "MySQL"
-                    }
-                ],
-                "linuxFxVersion": "DOCKER|usidsrsucr.azurecr.io/wordpress:php7.4-fpm-nginx",
-                "httpLoggingEnabled": true,
-                "logsDirectorySizeLimit": 35,
-                "minTlsVersion": "1.2",
-                "ftpsState": "AllAllowed"
-            }
-        },        
+        },               
         {
             "type": "Microsoft.DBforMySQL/servers",
             "apiVersion": "2017-12-01",
@@ -248,7 +241,8 @@
                     "backupRetentionDays": "7",
                     "geoRedundantBackup": "Disabled"
                 },
-                "sslEnforcement": "Disabled"
+                "sslEnforcement": "Disabled",
+                "publicNetworkAccess": "Disabled"
             },        
             "resources": [
             {
