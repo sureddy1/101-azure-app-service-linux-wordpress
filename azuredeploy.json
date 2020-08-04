@@ -186,19 +186,7 @@
                         {
                             "name": "DATABASE_USERNAME",
                             "value": "[concat(parameters('administratorLogin'),'@',variables('serverName'))]"
-                        },
-                        {
-                            "name": "DOCKER_REGISTRY_SERVER_PASSWORD",
-                            "value": "==1aCKnR5Dv6V2p1gLDNe803eChzF96j"
-                        },                    
-                        {
-                            "name": "DOCKER_REGISTRY_SERVER_URL",
-                            "value": "https://usidsrsucr.azurecr.io"
-                        },
-                        {
-                            "name": "DOCKER_REGISTRY_SERVER_USERNAME",
-                            "value": "usidsrsucr"
-                        },
+                        },                       
                         {
                             "name": "WEBSITE_HTTPLOGGING_RETENTION_DAYS",
                             "value": "7"
@@ -211,7 +199,7 @@
                             "type": "MySQL"
                         }
                     ],
-                    "linuxFxVersion": "DOCKER|usidsrsucr.azurecr.io/wordpress:php7.4-fpm-nginx",
+                    "linuxFxVersion": "DOCKER|sureddy1/wordpress:php7.4-fpm-nginx",
                     "httpLoggingEnabled": true,
                     "logsDirectorySizeLimit": 35,
                     "minTlsVersion": "1.2",
